@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\Workshop;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -12,6 +13,7 @@ use Illuminate\Support\Facades\Date;
 class EventsController extends BaseController
 {
     public function getWarmupEvents() {
+        //dd(Event::all());
         return Event::all();
     }
 
@@ -101,6 +103,10 @@ class EventsController extends BaseController
      */
 
     public function getEventsWithWorkshops() {
+
+        //dd(Workshop::with('workshops')->get());
+        return Event::with('workshops')->get();
+
         throw new \Exception('implement in coding task 1');
     }
 
