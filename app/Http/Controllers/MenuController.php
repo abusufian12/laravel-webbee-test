@@ -95,9 +95,23 @@ class MenuController extends BaseController
 
     public function getMenuItems() {
 
+        // $result = MenuItem::where('parent_id', function($query) {
+        //     $query->where('parent_id', MenuItem::where('parent_id', null), function($query2){
+        //         $query2->where('parent_id', MenuItem::where('parent_id', null), function($query2){})
+            
+        // })->get();
+
         //dd(MenuItem::where('parent_id', null)->get());
-        dd(MenuItem::where('parent_id', 1)->get());
-        return MenuItem::get();
+        $result = MenuItem::get();
+        // dd($result);
+        $menus = [];
+        foreach ($result as $key => $value) {
+           if ($value['parent_id'] == '') {
+                // $menus[] = 
+           }
+        }
+        // return $result;
+
         throw new \Exception('implement in coding task 3');
     }
 }

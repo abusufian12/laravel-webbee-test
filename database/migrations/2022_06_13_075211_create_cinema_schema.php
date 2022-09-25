@@ -37,6 +37,21 @@ class CreateCinemaSchema extends Migration
      */
     public function up()
     {
+        Schema::create('cinemas', function (Blueprint $table) {
+            $table->id();
+            $table->string('cinema_name');
+            $table->string('cinema_length');
+            $table->string('remain_tickets');
+            $table->string('show_times');
+            $table->string('per_show_price');
+            $table->string('seat_type');
+            $table->string('cinema_type');
+            $table->string('rating');
+            $table->string('total_vote');
+            $table->string('language');
+            $table->rememberToken();
+            $table->timestamps();
+        });
         throw new \Exception('implement in coding task 4, you can ignore this exception if you are just running the initial migrations.');
     }
 
