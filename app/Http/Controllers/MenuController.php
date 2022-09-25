@@ -94,6 +94,10 @@ class MenuController extends BaseController
      */
 
     public function getMenuItems() {
+
+        //dd(MenuItem::where('parent_id', null)->get());
+        dd(MenuItem::where('parent_id', 1)->get());
+        return MenuItem::get();
         throw new \Exception('implement in coding task 3');
     }
 }
