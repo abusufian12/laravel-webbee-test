@@ -95,23 +95,52 @@ class MenuController extends BaseController
 
     public function getMenuItems() {
 
-        // $result = MenuItem::where('parent_id', function($query) {
-        //     $query->where('parent_id', MenuItem::where('parent_id', null), function($query2){
-        //         $query2->where('parent_id', MenuItem::where('parent_id', null), function($query2){})
+        $result = MenuItem::orderBy('parent_id', 'ASC')->get();
+        $menus = array();
+        foreach ($result->toArray() as $key => $value) {
+            if ($value['parent_id'] == '') {
+                $menus['parent_id'] = $value;
+            }
             
-        // })->get();
-
-        //dd(MenuItem::where('parent_id', null)->get());
-        $result = MenuItem::get();
-        // dd($result);
-        $menus = [];
-        foreach ($result as $key => $value) {
-           if ($value['parent_id'] == '') {
-                // $menus[] = 
-           }
+            if (!empty($menus['parent_id'])) {
+                if (in_array($value['parent_id'], $menus['parent_id'])){
+                    $menus['parent_id']['children'][$key] = $value;
+                }
+                
+                if (!empty($menus['parent_id']['children'][$key])) {
+                    echo $value['id'];
+                    if (in_array($value['parent_id'], $menus['parent_id']['children'][$key])){
+                        
+                        $menus['parent_id']['children'][$key]['children'] = $value;
+                    }
+                }
+            }
+            
         }
-        // return $result;
+        //dd(self::searchItemsByKey($menus, 'id'));
+        return $menus;
 
-        throw new \Exception('implement in coding task 3');
+    }
+
+    public function searchItemsByKey($array, $key){
+        $results = array();
+        if (is_array($array))
+        {
+            if (isset($array[$key]) && key($array)==$key){
+                $results[] = $array[$key];
+            }
+
+            foreach ($array as $sub_array){
+                
+                $results = array_merge($results, self::searchItemsByKey($sub_array, $key));
+                //$results = self::searchItemsByKey($sub_array, $key);
+                if (!empty($results)) {
+                    dd($array);
+                    return $results;
+                }
+            }
+        }
+
+        return  $results;
     }
 }
